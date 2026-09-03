@@ -19,8 +19,8 @@ const emit = defineEmits<{
 const masks = useMasks()
 
 const tipoDocumento = computed(() => {
-  const doc = props.modelValue.replace(/\D/g, '')
-  return doc.length <= 11 ? 'cpf' : 'cnpj'
+  const doc = props.modelValue.replace(/[\s./-]/g, '').toUpperCase()
+  return /^\d{1,11}$/.test(doc) ? 'cpf' : 'cnpj'
 })
 
 const displayValue = computed({
