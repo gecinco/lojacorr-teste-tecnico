@@ -206,11 +206,11 @@ const hasActiveFilters = computed(() => activeFilterChips.value.length > 0)
         <div>
           <div class="brand-chip mb-3">
             <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
-            Painel do Corretor
+            Painel de Seguros
           </div>
           <h1 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight">Meus Seguros</h1>
           <p class="mt-2 text-white/80 max-w-xl">
-            Acompanhe, filtre e gerencie toda a sua carteira de apólices emissões, vigências e status de cobertura em um só lugar.
+            Acompanhe, filtre e gerencie toda a sua carteira de apólices: emissões, vigências e status de cobertura em um só lugar.
           </p>
         </div>
         <div class="flex flex-wrap items-center gap-3">

@@ -66,7 +66,6 @@ onUnmounted(() => document.removeEventListener('click', closeUserMenu))
                 </div>
                 <div class="hidden sm:flex flex-col items-start leading-tight">
                   <span class="text-white text-sm font-semibold">{{ authStore.user?.name }}</span>
-                  <span class="text-white/70 text-[10px] uppercase tracking-wider font-semibold">Corretor</span>
                 </div>
                 <svg class="hidden sm:block w-4 h-4 text-white/80 transition-transform" :class="{ 'rotate-180': userMenuOpen }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -135,7 +134,6 @@ onUnmounted(() => document.removeEventListener('click', closeUserMenu))
         <div class="flex items-center gap-2">
           <BrandLogo variant="dark" size="sm" :show-text="false" />
           <span class="font-semibold text-primary-800">Portal Seguros</span>
-          <span class="hidden sm:inline text-gray-400">Plataforma para corretores</span>
         </div>
         <div>© {{ new Date().getFullYear() }} • Todos os direitos reservados</div>
       </div>

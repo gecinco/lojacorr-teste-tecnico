@@ -25,8 +25,8 @@
             </span>
           </h1>
           <p class="text-white/80 text-lg max-w-md">
-            Plataforma completa para corretores gerenciarem cotações, contratações e
-            apólices com segurança, agilidade e auditoria.
+            Contrate seguros e acompanhe vigências, parcelas e status de
+            cobertura da sua carteira, com segurança e auditoria.
           </p>
         </div>
 

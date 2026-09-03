@@ -66,7 +66,7 @@ const sizeMap = {
           variant === 'light' ? 'text-white/70' : 'text-primary-500/80',
         ]"
       >
-        Portal do Corretor
+        Portal de Seguros
       </span>
     </div>
   </div>

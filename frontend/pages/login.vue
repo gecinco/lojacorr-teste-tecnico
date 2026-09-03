@@ -90,7 +90,7 @@ const handleSubmit = async () => {
         Acesse sua conta
       </h2>
       <p class="text-sm text-gray-500 mt-1">
-        Bem-vindo(a) de volta ao <span class="font-semibold text-primary-700">Portal do Corretor</span>
+        Bem-vindo(a) de volta ao <span class="font-semibold text-primary-700">Portal de Seguros</span>
       </p>
     </div>
 
