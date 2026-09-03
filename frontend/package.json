@@ -1,0 +1,41 @@
+{
+  "name": "lojacorr-seguros-frontend",
+  "version": "1.0.0",
+  "description": "Frontend do Sistema de Contratação de Seguros - Lojacorr",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.5.1",
+    "maska": "^2.1.11",
+    "nuxt": "^3.11.0",
+    "pinia": "^2.1.7",
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "^1.0.0",
+    "@nuxt/test-utils": "~3.12.0",
+    "@types/node": "^20.11.0",
+    "@vitejs/plugin-vue": "^5.0.0",
+    "@vue/test-utils": "^2.4.4",
+    "autoprefixer": "^10.4.17",
+    "eslint": "^8.56.0",
+    "happy-dom": "^13.3.8",
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.2",
+    "vue-tsc": "^1.8.27"
+  }
+}
