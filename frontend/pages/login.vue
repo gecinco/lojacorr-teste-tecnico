@@ -133,11 +133,8 @@ const handleSubmit = async () => {
 
       <!-- Senha -->
       <div>
-        <div class="flex items-center justify-between mb-1.5">
+        <div class="mb-1.5">
           <label for="password" class="label !mb-0">Senha</label>
-          <a href="#" class="text-xs font-semibold text-primary-600 hover:text-primary-700 transition-colors">
-            Esqueceu?
-          </a>
         </div>
         <div class="relative">
           <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-primary-400">
