@@ -1,6 +1,6 @@
 services:
   # ===========================================
-  # BACKEND - Laravel API
+  # BACKEND
   # ===========================================
   backend:
     build:
@@ -42,8 +42,7 @@ services:
     command: php artisan serve --host=0.0.0.0 --port=8000
 
   # ===========================================
-  # QUEUE WORKER - Processa jobs assíncronos
-  # (auditoria em MongoDB fica fora do caminho crítico HTTP)
+  # QUEUE WORKER
   # ===========================================
   queue:
     build:
@@ -83,7 +82,7 @@ services:
     command: php artisan queue:work --sleep=3 --tries=3 --timeout=60
 
   # ===========================================
-  # FRONTEND - Nuxt 3
+  # FRONTEND
   # ===========================================
   frontend:
     build:
@@ -108,7 +107,7 @@ services:
     command: npm run dev -- --host 0.0.0.0
 
   # ===========================================
-  # BANCO DE DADOS - MariaDB
+  # BANCO DE DADOS
   # ===========================================
   mariadb:
     image: mariadb:10.6
@@ -132,7 +131,7 @@ services:
       retries: 5
 
   # ===========================================
-  # CACHE - Redis
+  # CACHE
   # ===========================================
   redis:
     image: redis:7-alpine
@@ -152,7 +151,7 @@ services:
       retries: 5
 
   # ===========================================
-  # LOGS DE AUDITORIA - MongoDB (Opcional)
+  # LOGS DE AUDITORIA
   # ===========================================
   mongodb:
     image: mongo:6
@@ -175,7 +174,7 @@ services:
       retries: 5
 
   # ===========================================
-  # PHPMYADMIN (Desenvolvimento)
+  # PHPMYADMIN
   # ===========================================
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
