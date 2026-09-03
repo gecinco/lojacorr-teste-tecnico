@@ -1,4 +1,4 @@
-/** Validações de CPF/CNPJ/coerência financeira/vigência — funções puras. */
+/** Validações de CPF/CNPJ/coerência financeira/vigência - funções puras. */
 
 type ValidationResult = { valid: boolean; message: string }
 type DocumentValidation = ValidationResult & { tipo: 'cpf' | 'cnpj' | null }
@@ -154,7 +154,7 @@ export const validateVigencia = (inicio: string, fim: string): ValidationResult 
   return { valid: true, message: '' }
 }
 
-/** Wrapper de compatibilidade — novos usos devem importar as funções direto. */
+/** Wrapper de compatibilidade - novos usos devem importar as funções direto. */
 export function useValidation() {
   return {
     validateCpf,

@@ -1,4 +1,4 @@
-/** Máscaras/normalizações de strings — funções puras, sem estado. */
+/** Máscaras/normalizações de strings - funções puras, sem estado. */
 
 export const maskCpf = (value: string): string => {
   const numeros = value.replace(/\D/g, '').slice(0, 11)
@@ -100,7 +100,7 @@ export const normalizeDate = (value: string): string => {
   return `${year}-${match[2]}-${match[3]}`
 }
 
-/** Wrapper de compatibilidade — novos usos devem importar as funções direto. */
+/** Wrapper de compatibilidade - novos usos devem importar as funções direto. */
 export function useMasks() {
   return {
     maskCpf,

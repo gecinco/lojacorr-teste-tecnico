@@ -1,4 +1,4 @@
-# Interações com IA — exemplo real de prompt de revisão
+# Interações com IA - exemplo real de prompt de revisão
 
 Registro de como o projeto foi revisado com auxílio de IA (Claude), conforme solicitado no desafio. Os prompts abaixo foram usados em uma rodada de revisão de qualidade, performance e refatorações após a implementação inicial.
 

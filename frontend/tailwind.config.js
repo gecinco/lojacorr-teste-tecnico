@@ -15,7 +15,7 @@ export default {
         display: ['Poppins', 'Inter', 'system-ui', 'sans-serif'],
       },
       colors: {
-        // Paleta principal — bordô/vinho profundo com acento vermelho
+        // Paleta principal - bordô/vinho profundo com acento vermelho
         primary: {
           50: '#fdf3f4',
           100: '#fbe7ea',
@@ -28,7 +28,7 @@ export default {
           800: '#4f111b',
           900: '#340b12',
         },
-        // Vinho profundo — topbars, hero, botões escuros
+        // Vinho profundo - topbars, hero, botões escuros
         wine: {
           50: '#f8ecee',
           100: '#eecdd1',

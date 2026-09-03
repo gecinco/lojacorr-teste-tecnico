@@ -11,7 +11,7 @@ class DocumentoValido implements Rule
     public function passes($attribute, $value)
     {
         // CPF: somente dígitos. CNPJ: aceita o formato alfanumérico da Receita (2026),
-        // letras apenas na base de 12 caracteres — os 2 dígitos verificadores seguem numéricos.
+        // letras apenas na base de 12 caracteres - os 2 dígitos verificadores seguem numéricos.
         $documento = preg_replace('/[\s.\-\/]/', '', $value);
 
         if (preg_match('/^\d{11}$/', $documento)) {
