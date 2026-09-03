@@ -481,7 +481,10 @@ O container roda **PHP 7.3** (por fidelidade à stack da Lojacorr). Recursos de 
 Conforme solicitado, registro aqui o uso de ferramentas de IA durante o desenvolvimento:
 
 ### Ferramentas Utilizadas
-- **Claude (Cursor AI)**: Assistente principal de desenvolvimento
+- **Claude (Cursor AI / Claude Code)**: Assistente principal de desenvolvimento
+- **GitHub Copilot (Claude)**: Rodada de revisão de qualidade, performance e refatorações
+
+Exemplos reais de prompts de revisão estão em [docs/ai-interactions.md](docs/ai-interactions.md).
 
 ### Áreas de Utilização
 1. **Estruturação do Projeto**: A IA auxiliou na definição da arquitetura em camadas e organização de pastas, seguindo padrões da comunidade Laravel.
