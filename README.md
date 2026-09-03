@@ -520,9 +520,10 @@ Se houvesse mais tempo, implementaria:
 2. **CI/CD**: GitHub Actions para testes e deploy automatizado
 3. **Documentação API**: Swagger/OpenAPI
 4. **Notificações**: Sistema de alertas de vencimento
-5. **Relatórios**: Exportação em PDF/Excel
-6. **Multi-tenancy**: Suporte a múltiplas corretoras
-7. **Internacionalização**: Suporte a múltiplos idiomas
+5. **Recuperação de senha**: Fluxo com token por e-mail
+6. **Relatórios**: Exportação em PDF/Excel
+7. **Multi-tenancy**: Suporte a múltiplas corretoras
+8. **Internacionalização**: Suporte a múltiplos idiomas
 
 ---
 
