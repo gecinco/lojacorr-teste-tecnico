@@ -56,6 +56,16 @@ describe('useValidation', () => {
       expect(validateCnpj('1122233300018').valid).toBe(false)
       expect(validateCnpj('112223330001811').valid).toBe(false)
     })
+
+    it('valida CNPJ alfanumérico (formato Receita 2026)', () => {
+      expect(validateCnpj('12ABC34501DE35').valid).toBe(true)
+      expect(validateCnpj('12.abc.345/01de-35').valid).toBe(true)
+    })
+
+    it('rejeita CNPJ alfanumérico com DV incorreto ou letra no DV', () => {
+      expect(validateCnpj('12ABC34501DE34').valid).toBe(false)
+      expect(validateCnpj('12ABC34501DE3X').valid).toBe(false)
+    })
   })
 
   describe('validateDocumento', () => {

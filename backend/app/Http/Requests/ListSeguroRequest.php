@@ -33,7 +33,7 @@ class ListSeguroRequest extends FormRequest
     {
         if ($this->documento) {
             $this->merge([
-                'documento' => preg_replace('/\D/', '', $this->documento),
+                'documento' => preg_replace('/[\s.\-\/]/', '', $this->documento),
             ]);
         }
     }

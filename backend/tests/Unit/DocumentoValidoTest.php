@@ -87,4 +87,26 @@ class DocumentoValidoTest extends TestCase
 
         $this->assertStringContainsString('CNPJ', $rule->message());
     }
+
+    public function testAceitaCnpjAlfanumericoValido()
+    {
+        $rule = new DocumentoValido();
+
+        $this->assertTrue($rule->passes('documento', '12ABC34501DE35'));
+        $this->assertTrue($rule->passes('documento', '12.abc.345/01de-35'));
+    }
+
+    public function testRejeitaCnpjAlfanumericoComDigitoIncorreto()
+    {
+        $rule = new DocumentoValido();
+
+        $this->assertFalse($rule->passes('documento', '12ABC34501DE34'));
+    }
+
+    public function testRejeitaCnpjAlfanumericoComLetraNoDigitoVerificador()
+    {
+        $rule = new DocumentoValido();
+
+        $this->assertFalse($rule->passes('documento', '12ABC34501DE3X'));
+    }
 }

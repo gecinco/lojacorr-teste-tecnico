@@ -84,13 +84,14 @@ class StoreSeguroRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        $documento = preg_replace('/\D/', '', $this->documento_segurado ?? '');
+        // Mantém letras: CNPJ alfanumérico da Receita tem base de 12 caracteres.
+        $documento = preg_replace('/[\s.\-\/]/', '', $this->documento_segurado ?? '');
         $cep = preg_replace('/\D/', '', $this->cep ?? '');
-        
+
         $this->merge([
             'documento_segurado' => $documento,
             'cep' => $cep,
-            'tipo_documento' => strlen($documento) <= 11 ? 'cpf' : 'cnpj',
+            'tipo_documento' => ctype_digit($documento) && strlen($documento) <= 11 ? 'cpf' : 'cnpj',
         ]);
     }
 }

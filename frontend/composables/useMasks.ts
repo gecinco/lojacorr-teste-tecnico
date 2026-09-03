@@ -17,7 +17,20 @@ export const maskCnpj = (value: string): string => {
     .replace(/(\d{4})(\d{1,2})$/, '$1-$2')
 }
 
+// CNPJ alfanumérico: a máscara mantém a mesma forma, preservando letras na base.
+export const maskCnpjAlfanumerico = (value: string): string => {
+  const limpo = value.toUpperCase().replace(/[^0-9A-Z]/g, '').slice(0, 14)
+  return limpo
+    .replace(/([0-9A-Z]{2})([0-9A-Z])/, '$1.$2')
+    .replace(/([0-9A-Z]{3})([0-9A-Z])/, '$1.$2')
+    .replace(/([0-9A-Z]{3})([0-9A-Z])/, '$1/$2')
+    .replace(/([0-9A-Z]{4})([0-9]{1,2})$/, '$1-$2')
+}
+
 export const maskDocumento = (value: string): string => {
+  if (/[A-Za-z]/.test(value)) {
+    return maskCnpjAlfanumerico(value)
+  }
   const numeros = value.replace(/\D/g, '')
   if (numeros.length <= 11) {
     return maskCpf(numeros)
@@ -73,7 +86,8 @@ export const formatDateToBR = (isoString: string): string => {
   return isoString
 }
 
-export const unmaskDocument = (value: string): string => value.replace(/\D/g, '')
+export const unmaskDocument = (value: string): string =>
+  value.toUpperCase().replace(/[^0-9A-Z]/g, '').slice(0, 14)
 
 export const unmaskCep = (value: string): string => value.replace(/\D/g, '')
 
@@ -91,6 +105,7 @@ export function useMasks() {
   return {
     maskCpf,
     maskCnpj,
+    maskCnpjAlfanumerico,
     maskDocumento,
     maskCep,
     maskCurrency,

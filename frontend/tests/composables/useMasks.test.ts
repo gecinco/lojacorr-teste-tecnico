@@ -4,6 +4,7 @@ import { useMasks } from '../../composables/useMasks'
 const {
   maskCpf,
   maskCnpj,
+  maskCnpjAlfanumerico,
   maskDocumento,
   maskCep,
   maskCurrency,
@@ -52,6 +53,11 @@ describe('useMasks', () => {
 
     it('trata entrada com caracteres especiais', () => {
       expect(maskDocumento('123.456.789-09')).toBe('123.456.789-09')
+    })
+
+    it('aplica máscara de CNPJ alfanumérico preservando letras', () => {
+      expect(maskDocumento('12ABC34501DE35')).toBe('12.ABC.345/01DE-35')
+      expect(maskCnpjAlfanumerico('12abc34501de35')).toBe('12.ABC.345/01DE-35')
     })
   })
 

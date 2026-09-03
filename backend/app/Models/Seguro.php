@@ -90,7 +90,7 @@ class Seguro extends Model
 
     public function scopeByDocumento($query, $documento)
     {
-        $documentoLimpo = preg_replace('/\D/', '', $documento);
+        $documentoLimpo = preg_replace('/[\s.\-\/]/', '', $documento);
         return $query->where('documento_segurado', $documentoLimpo);
     }
 

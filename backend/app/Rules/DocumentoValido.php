@@ -10,11 +10,15 @@ class DocumentoValido implements Rule
 
     public function passes($attribute, $value)
     {
-        $documento = preg_replace('/\D/', '', $value);
+        // CPF: somente dígitos. CNPJ: aceita o formato alfanumérico da Receita (2026),
+        // letras apenas na base de 12 caracteres — os 2 dígitos verificadores seguem numéricos.
+        $documento = preg_replace('/[\s.\-\/]/', '', $value);
 
-        if (strlen($documento) === 11) {
+        if (preg_match('/^\d{11}$/', $documento)) {
             return $this->validaCpf($documento);
-        } elseif (strlen($documento) === 14) {
+        }
+
+        if (preg_match('/^[0-9A-Za-z]{12}\d{2}$/', $documento)) {
             return $this->validaCnpj($documento);
         }
 
@@ -45,7 +49,7 @@ class DocumentoValido implements Rule
 
     private function validaCnpj($cnpj)
     {
-        if (preg_match('/(\d)\1{13}/', $cnpj)) {
+        if (preg_match('/^(.)\1{13}$/', $cnpj)) {
             $this->message = 'CNPJ inválido: sequência repetida';
             return false;
         }
@@ -67,8 +71,9 @@ class DocumentoValido implements Rule
     }
 
     /**
-     * Calcula um dígito verificador de CNPJ para uma base de 12 ou 13 dígitos
-     * (pesos 2 a 9 aplicados da direita para a esquerda)
+     * Dígito verificador de CNPJ (pesos 2 a 9, direita para a esquerda).
+     * No formato alfanumérico, o valor do caractere é o próprio dígito ou
+     * o código ASCII do caractere menos 48 (mesma tabela da Receita).
      */
     private function calculaDigitoCnpj($base)
     {
@@ -76,7 +81,9 @@ class DocumentoValido implements Rule
         $peso = 2;
 
         for ($i = strlen($base) - 1; $i >= 0; $i--) {
-            $soma += $base[$i] * $peso++;
+            $caractere = $base[$i];
+            $valor = is_numeric($caractere) ? $caractere : ord(strtoupper($caractere)) - 48;
+            $soma += $valor * $peso++;
             if ($peso > 9) {
                 $peso = 2;
             }

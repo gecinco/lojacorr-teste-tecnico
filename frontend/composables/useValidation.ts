@@ -43,14 +43,23 @@ export const validateCpf = (cpf: string): ValidationResult => {
   return { valid: true, message: '' }
 }
 
+// Valor do caractere para o CNPJ alfanumérico: dígito ou código ASCII - 48 (tabela da Receita).
+const valorCaractereCnpj = (caractere: string): number =>
+  /[0-9]/.test(caractere) ? parseInt(caractere, 10) : caractere.toUpperCase().charCodeAt(0) - 48
+
 export const validateCnpj = (cnpj: string): ValidationResult => {
-  const cnpjLimpo = cnpj.replace(/\D/g, '')
+  // Formato alfanumérico da Receita (2026): base de 12 caracteres alfanuméricos + 2 DVs numéricos.
+  const cnpjLimpo = cnpj.replace(/[\s./-]/g, '').toUpperCase()
 
   if (cnpjLimpo.length !== 14) {
-    return { valid: false, message: 'CNPJ deve conter 14 dígitos' }
+    return { valid: false, message: 'CNPJ deve conter 14 caracteres' }
   }
 
-  if (/^(\d)\1{13}$/.test(cnpjLimpo)) {
+  if (!/^[0-9A-Z]{12}[0-9]{2}$/.test(cnpjLimpo)) {
+    return { valid: false, message: 'CNPJ inválido: use 12 caracteres alfanuméricos e 2 dígitos' }
+  }
+
+  if (/^(.)\1{13}$/.test(cnpjLimpo)) {
     return { valid: false, message: 'CNPJ inválido: sequência repetida' }
   }
 
@@ -61,7 +70,7 @@ export const validateCnpj = (cnpj: string): ValidationResult => {
   let pos = tamanho - 7
 
   for (let i = tamanho; i >= 1; i--) {
-    soma += parseInt(numeros.charAt(tamanho - i)) * pos--
+    soma += valorCaractereCnpj(numeros.charAt(tamanho - i)) * pos--
     if (pos < 2) pos = 9
   }
 
@@ -76,7 +85,7 @@ export const validateCnpj = (cnpj: string): ValidationResult => {
   pos = tamanho - 7
 
   for (let i = tamanho; i >= 1; i--) {
-    soma += parseInt(numeros.charAt(tamanho - i)) * pos--
+    soma += valorCaractereCnpj(numeros.charAt(tamanho - i)) * pos--
     if (pos < 2) pos = 9
   }
 
@@ -89,13 +98,13 @@ export const validateCnpj = (cnpj: string): ValidationResult => {
 }
 
 export const validateDocumento = (documento: string): DocumentValidation => {
-  const documentoLimpo = documento.replace(/\D/g, '')
+  const documentoLimpo = documento.replace(/[\s./-]/g, '').toUpperCase()
 
   if (documentoLimpo.length === 0) {
     return { valid: false, message: 'Documento é obrigatório', tipo: null }
   }
 
-  if (documentoLimpo.length <= 11) {
+  if (/^\d{1,11}$/.test(documentoLimpo)) {
     return { ...validateCpf(documentoLimpo), tipo: 'cpf' }
   }
 
