@@ -1,6 +1,6 @@
 {
     "name": "lojacorr/seguros-api",
-    "description": "API de Contratação de Seguros - Desafio Técnico Lojacorr",
+    "description": "API de Contratação de Seguros para o Desafio Técnico Lojacorr",
     "keywords": ["seguros", "laravel", "api", "lojacorr"],
     "license": "MIT",
     "type": "project",

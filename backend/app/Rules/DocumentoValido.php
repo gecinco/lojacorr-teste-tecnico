@@ -68,7 +68,7 @@ class DocumentoValido implements Rule
         return true;
     }
 
-    /** DV do CNPJ (pesos 2 a 9); no formato alfanumérico o valor do caractere é ASCII - 48. */
+    /** DV do CNPJ (pesos 2 a 9; no alfanumérico, valor do caractere é ASCII menos 48). */
     private function calculaDigitoCnpj($base)
     {
         $soma = 0;

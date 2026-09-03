@@ -23,7 +23,7 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'Seguros - Portal de Contratação',
+      title: 'Portal de Contratação de Seguros',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },

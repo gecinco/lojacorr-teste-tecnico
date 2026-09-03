@@ -7,7 +7,7 @@ use App\Repositories\Contracts\SeguroRepositoryInterface;
 
 class SeguroRepository implements SeguroRepositoryInterface
 {
-    /** Colunas usadas pelo SeguroResource - evita SELECT *. */
+    /** Colunas usadas pelo SeguroResource, evita SELECT *. */
     private const LIST_COLUMNS = [
         'id', 'user_id', 'seguradora_id', 'ramo_id',
         'documento_segurado', 'tipo_documento', 'nome_segurado',

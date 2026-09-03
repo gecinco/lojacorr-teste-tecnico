@@ -1,4 +1,4 @@
-# Lojacorr Seguros - Sistema de Contratação de Seguros
+# Lojacorr Seguros
 
 Sistema fullstack para contratação e gestão de seguros, desenvolvido como desafio técnico para a posição de Analista Desenvolvedor Fullstack Pleno na Lojacorr Seguros.
 
@@ -54,7 +54,7 @@ Este projeto simula um cenário real do dia a dia da Lojacorr: **contratar um se
 ### Formulário de Contratação de Seguro
 - CPF/CNPJ com máscara dinâmica (detecta automaticamente)
 - Validação completa de CPF (dígitos verificadores)
-- Validação completa de CNPJ (incluindo alfanumérico - regra 2026)
+- Validação completa de CNPJ (incluindo alfanumérico da regra 2026)
 - Seleção de Seguradora e Ramo (via API)
 - Valor total com máscara monetária pt-BR
 - Parcelas de 1x a 12x
@@ -67,7 +67,7 @@ Este projeto simula um cenário real do dia a dia da Lojacorr: **contratar um se
 ### Listagem de Seguros
 - Tabela com todas as informações
 - Filtros server-side (CPF/CNPJ, período, ramo, seguradora)
-- Filtro por status clicando nos cards de resumo (Vigentes / A vencer / Vencidos) - clique aplica, clique novamente remove
+- Filtro por status clicando nos cards de resumo (Vigentes / A vencer / Vencidos): clique aplica, clique novamente remove
 - Ordenação server-side em todas as colunas
 - Paginação server-side (10/25/50 por página)
 - Indicadores visuais de status (vigente, vencido, a vencer)
@@ -103,13 +103,13 @@ Controllers → Services → Repositories → Models
 - **Form Requests**: Validações isoladas em classes dedicadas, promovendo SRP
 - **Resources/Transformers**: Padronização das respostas da API
 - **Custom Rules**: Validações complexas (CPF/CNPJ, coerência financeira) em classes reutilizáveis
-- **Autorização no repositório**: `update`/`delete` escopam o próprio SQL por `user_id` - o banco nunca cruza registros entre usuários, mesmo que uma camada superior falhe (proteção contra IDOR)
+- **Autorização no repositório**: `update`/`delete` escopam o próprio SQL por `user_id`: o banco nunca cruza registros entre usuários, mesmo que uma camada superior falhe (proteção contra IDOR)
 
 **Otimizações de Performance:**
 - Queries da listagem com `select()` explícito de colunas necessárias e eager load seletivo (`seguradora:id,nome,codigo`)
-- Endpoint de resumo agregado em uma única query (`CASE`/`SUM` no SQL) em vez de 3 filtros no frontend - que, além de mais lentos, só refletiam a página atual (bug corrigido)
+- Endpoint de resumo agregado em uma única query (`CASE`/`SUM` no SQL) em vez de 3 filtros no frontend, que além de mais lentos, só refletiam a página atual (bug corrigido)
 - Resumo cacheado por usuário (TTL curto + invalidação em mutações)
-- Auditoria gravada por job em fila, após o commit da transação - fora do caminho crítico do CRUD
+- Auditoria gravada por job em fila, após o commit da transação, fora do caminho crítico do CRUD
 - Cache do middleware JWT: o `User` é hidratado uma única vez por request e reutilizado por controllers/services
 - Frontend: `AbortController` nas listagens (evita race condition ao trocar filtros/página rápido), funções puras exportadas diretamente nos composables de máscara/validação, e listener de scroll `passive` com throttle por `requestAnimationFrame` no BaseSelect
 
@@ -140,7 +140,7 @@ Controllers → Services → Repositories → Models
 - `inicio_vigencia`, `fim_vigencia`: Filtros por período
 - `(inicio_vigencia, fim_vigencia)`: Consultas de intervalo
 - `(user_id, created_at)`: Ordenação padrão da listagem
-- `(user_id, seguradora_id)`, `(user_id, ramo_id)`, `(user_id, documento_segurado)`, `(user_id, inicio_vigencia)`, `(user_id, fim_vigencia)`: Filtros compostos - todas as queries da API filtram por usuário, então `user_id` é o prefixo dos índices
+- `(user_id, seguradora_id)`, `(user_id, ramo_id)`, `(user_id, documento_segurado)`, `(user_id, inicio_vigencia)`, `(user_id, fim_vigencia)`: Filtros compostos: todas as queries da API filtram por usuário, então `user_id` é o prefixo dos índices
 
 ### Cache (Redis)
 
@@ -155,7 +155,7 @@ Controllers → Services → Repositories → Models
 
 **Como funciona:**
 - Toda operação de CRUD em seguros gera um registro de auditoria (ação, estado anterior, estado novo, IP, user agent)
-- A gravação é feita por um **job em fila** (`LogAuditRecord`), executado **após o commit** da transação SQL - a latência do MongoDB nunca fica no caminho crítico da resposta e nenhum log registra operação que sofreu rollback
+- A gravação é feita por um **job em fila** (`LogAuditRecord`), executado **após o commit** da transação SQL: a latência do MongoDB nunca fica no caminho crítico da resposta e nenhum log registra operação que sofreu rollback
 - Falhas do job são registradas com retry (3 tentativas)
 
 **Por que MongoDB para logs?**
@@ -239,7 +239,7 @@ docker-compose exec backend php artisan migrate --seed
 # PHPMyAdmin:   http://localhost:8080
 ```
 
-> **Nota:** Se o pull de alguma imagem falhar por erro de rede/proxy, basta rodar `docker-compose up -d --build` novamente - o Docker retoma o download de onde parou.
+> **Nota:** Se o pull de alguma imagem falhar por erro de rede/proxy, basta rodar `docker-compose up -d --build` novamente, o Docker retoma o download de onde parou.
 
 ### Opção 2: Instalação Manual
 
@@ -375,7 +375,7 @@ GET /api/v1/seguros?documento=12345678909
 
 ## Testes
 
-**Status atual:  52 testes backend / 43 testes frontend - todos passando.**
+**Status atual:  52 testes backend / 43 testes frontend, todos passando.**
 
 ### Backend (PHPUnit)
 
@@ -447,7 +447,7 @@ npm install
 ```
 
 ### `failed to copy: connection reset by peer` no Docker
-Erro de rede durante o pull de imagens. Basta rodar `docker-compose up -d --build` novamente - o Docker retoma de onde parou. Se usar proxy, verifique as configurações em **Docker Desktop → Settings → Resources → Proxies**.
+Erro de rede durante o pull de imagens. Basta rodar `docker-compose up -d --build` novamente, o Docker retoma de onde parou. Se usar proxy, verifique as configurações em **Docker Desktop → Settings → Resources → Proxies**.
 
 ### `php artisan jwt:secret` falha com "Class 'Tymon\\JWTAuth' not found"
 O `package:discover` não foi executado. No Docker, isso é corrigido rodando:
@@ -469,10 +469,10 @@ E confira os logs: `docker-compose logs backend`
 Isso acontecia porque o Docker injeta `DB_CONNECTION=mysql` no ambiente do container e o PHPUnit não sobrescreve variáveis de ambiente já existentes. O `phpunit.xml` já foi corrigido com `force="true"` (força sqlite em memória nos testes). Se restaurar o ambiente: `docker-compose exec backend php artisan migrate:fresh --seed --force`.
 
 ### `npm run lint` falha com "couldn't find a configuration file"
-O projeto ainda não possui arquivo de configuração do ESLint (`.eslintrc`). O script existe no `package.json` para uso futuro - para habilitar, rode `npm init @eslint/config` ou instale `@nuxtjs/eslint-config`.
+O projeto ainda não possui arquivo de configuração do ESLint (`.eslintrc`). O script existe no `package.json` para uso futuro; para habilitar, rode `npm init @eslint/config` ou instale `@nuxtjs/eslint-config`.
 
 ### Cuidado com sintaxe moderna no backend
-O container roda **PHP 7.3** (por fidelidade à stack da Lojacorr). Recursos de PHP 7.4+ como arrow functions (`fn () => ...`), promoted properties e `?->` **não funcionam** e dão erro de parse/sintaxe. O mesmo vale para helpers introduzidos em Laravel 8+ (ex.: `DB::afterCommit`, `assertJsonPath`) - a versão é **5.8**.
+O container roda **PHP 7.3** (por fidelidade à stack da Lojacorr). Recursos de PHP 7.4+ como arrow functions (`fn () => ...`), promoted properties e `?->` **não funcionam** e dão erro de parse/sintaxe. O mesmo vale para helpers introduzidos em Laravel 8+ (ex.: `DB::afterCommit`, `assertJsonPath`); a versão é **5.8**.
 
 ---
 

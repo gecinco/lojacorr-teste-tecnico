@@ -135,7 +135,7 @@ onUnmounted(() => document.removeEventListener('click', closeUserMenu))
         <div class="flex items-center gap-2">
           <BrandLogo variant="dark" size="sm" :show-text="false" />
           <span class="font-semibold text-primary-800">Portal Seguros</span>
-          <span class="hidden sm:inline text-gray-400">- Plataforma para corretores.</span>
+          <span class="hidden sm:inline text-gray-400">Plataforma para corretores</span>
         </div>
         <div>© {{ new Date().getFullYear() }} • Todos os direitos reservados</div>
       </div>

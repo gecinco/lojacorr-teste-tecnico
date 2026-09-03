@@ -26,7 +26,7 @@
           </h1>
           <p class="text-white/80 text-lg max-w-md">
             Plataforma completa para corretores gerenciarem cotações, contratações e
-            apólices - com segurança, agilidade e auditoria.
+            apólices com segurança, agilidade e auditoria.
           </p>
         </div>
 
@@ -79,7 +79,7 @@
             <slot />
           </div>
           <p class="text-center text-white/70 text-xs mt-6">
-            © {{ new Date().getFullYear() }} Portal Seguros - Todos os direitos reservados
+            © {{ new Date().getFullYear() }} Portal Seguros. Todos os direitos reservados
           </p>
         </div>
       </div>

@@ -1,7 +1,7 @@
 {
   "name": "lojacorr-seguros-frontend",
   "version": "1.0.0",
-  "description": "Frontend do Sistema de Contratação de Seguros - Lojacorr",
+  "description": "Frontend do Sistema de Contratação de Seguros da Lojacorr",
   "private": true,
   "type": "module",
   "scripts": {

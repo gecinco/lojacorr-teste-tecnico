@@ -278,7 +278,7 @@ class SeguroTest extends TestCase
 
     public function testSummaryRetornaContagensPorStatus()
     {
-        // Janelas relativas à data de execução - não dependem do calendário.
+        // Janelas relativas à data de execução, não dependem do calendário.
         $hoje = now()->startOfDay();
         $this->criarSeguroPara(
             $this->user,
