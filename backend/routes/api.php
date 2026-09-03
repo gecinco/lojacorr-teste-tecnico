@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 // Prefixo: /api/v1
 
-// Rotas públicas — refresh fica fora de jwt.auth porque é usado justamente
-// quando o token expirou (o Manager::refresh() aceita tokens expirados).
+// Refresh fora de jwt.auth: aceita tokens já expirados.
 Route::middleware('throttle:10,1')->group(function () {
     Route::post('/auth/login', 'AuthController@login');
     Route::post('/auth/refresh', 'AuthController@refresh');
