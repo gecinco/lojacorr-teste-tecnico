@@ -1,0 +1,211 @@
+services:
+  # ===========================================
+  # BACKEND - Laravel API
+  # ===========================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: lojacorr-backend
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./backend:/var/www
+      - /var/www/vendor
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_KEY=base64:GZC5TcOavqTv/XkuJzVHoo4C1mA1BC1Dkn/nv62vltc=
+      - JWT_SECRET=308e34ace7f7da81e682ce175be59e3e8515051e105f93ceeb72472a93dd858e
+      - DB_CONNECTION=mysql
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_DATABASE=lojacorr_seguros
+      - DB_USERNAME=lojacorr
+      - DB_PASSWORD=lojacorr123
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - MONGO_HOST=mongodb
+      - MONGO_PORT=27017
+      - MONGO_USERNAME=admin
+      - MONGO_PASSWORD=admin123
+      - MONGO_DATABASE=lojacorr_logs
+    depends_on:
+      - mariadb
+      - redis
+      - mongodb
+    networks:
+      - lojacorr-network
+    entrypoint: ["/usr/local/bin/docker-entrypoint.sh"]
+    command: php artisan serve --host=0.0.0.0 --port=8000
+
+  # ===========================================
+  # QUEUE WORKER - Processa jobs assíncronos
+  # (auditoria em MongoDB fica fora do caminho crítico HTTP)
+  # ===========================================
+  queue:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: lojacorr-queue
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./backend:/var/www
+      - /var/www/vendor
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_KEY=base64:GZC5TcOavqTv/XkuJzVHoo4C1mA1BC1Dkn/nv62vltc=
+      - JWT_SECRET=308e34ace7f7da81e682ce175be59e3e8515051e105f93ceeb72472a93dd858e
+      - DB_CONNECTION=mysql
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_DATABASE=lojacorr_seguros
+      - DB_USERNAME=lojacorr
+      - DB_PASSWORD=lojacorr123
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - MONGO_HOST=mongodb
+      - MONGO_PORT=27017
+      - MONGO_USERNAME=admin
+      - MONGO_PASSWORD=admin123
+      - MONGO_DATABASE=lojacorr_logs
+    depends_on:
+      - backend
+      - redis
+      - mongodb
+    networks:
+      - lojacorr-network
+    entrypoint: []
+    command: php artisan queue:work --sleep=3 --tries=3 --timeout=60
+
+  # ===========================================
+  # FRONTEND - Nuxt 3
+  # ===========================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: lojacorr-frontend
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.nuxt
+    ports:
+      - "3000:3000"
+    environment:
+      - NUXT_PUBLIC_API_BASE=http://localhost:8000/api/v1
+      - NODE_ENV=development
+    depends_on:
+      - backend
+    networks:
+      - lojacorr-network
+    command: npm run dev -- --host 0.0.0.0
+
+  # ===========================================
+  # BANCO DE DADOS - MariaDB
+  # ===========================================
+  mariadb:
+    image: mariadb:10.6
+    container_name: lojacorr-mariadb
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: lojacorr_seguros
+      MYSQL_USER: lojacorr
+      MYSQL_PASSWORD: lojacorr123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - lojacorr-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ===========================================
+  # CACHE - Redis
+  # ===========================================
+  redis:
+    image: redis:7-alpine
+    container_name: lojacorr-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - lojacorr-network
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ===========================================
+  # LOGS DE AUDITORIA - MongoDB (Opcional)
+  # ===========================================
+  mongodb:
+    image: mongo:6
+    container_name: lojacorr-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: lojacorr_logs
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - lojacorr-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ===========================================
+  # PHPMYADMIN (Desenvolvimento)
+  # ===========================================
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: lojacorr-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root123
+    ports:
+      - "8080:80"
+    depends_on:
+      - mariadb
+    networks:
+      - lojacorr-network
+
+# ===========================================
+# VOLUMES PERSISTENTES
+# ===========================================
+volumes:
+  mariadb_data:
+    driver: local
+  redis_data:
+    driver: local
+  mongodb_data:
+    driver: local
+
+# ===========================================
+# REDE
+# ===========================================
+networks:
+  lojacorr-network:
+    driver: bridge
