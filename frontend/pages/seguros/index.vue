@@ -491,8 +491,12 @@ const hasActiveFilters = computed(() => activeFilterChips.value.length > 0)
                 <th class="sortable" @click="handleSort('nome_segurado')">
                   Segurado {{ getSortIcon('nome_segurado') }}
                 </th>
-                <th>Seguradora</th>
-                <th>Ramo</th>
+                <th class="sortable" @click="handleSort('seguradora')">
+                  Seguradora {{ getSortIcon('seguradora') }}
+                </th>
+                <th class="sortable" @click="handleSort('ramo')">
+                  Ramo {{ getSortIcon('ramo') }}
+                </th>
                 <th class="sortable" @click="handleSort('valor_total')">
                   Valor {{ getSortIcon('valor_total') }}
                 </th>
@@ -502,7 +506,9 @@ const hasActiveFilters = computed(() => activeFilterChips.value.length > 0)
                 <th class="sortable" @click="handleSort('fim_vigencia')">
                   Fim {{ getSortIcon('fim_vigencia') }}
                 </th>
-                <th>Status</th>
+                <th class="sortable" @click="handleSort('status')">
+                  Status {{ getSortIcon('status') }}
+                </th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">

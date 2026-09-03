@@ -25,7 +25,14 @@ class SeguroRepository implements SeguroRepositoryInterface
 
     private const ALLOWED_SORT_FIELDS = [
         'id', 'documento_segurado', 'nome_segurado',
-        'valor_total', 'inicio_vigencia', 'fim_vigencia', 'created_at',
+        'valor_total', 'quantidade_parcelas', 'valor_parcela',
+        'inicio_vigencia', 'fim_vigencia', 'created_at',
+    ];
+
+    // Colunas exibidas que pertencem a tabelas relacionadas; ordenação via subquery escalar.
+    private const RELATION_SORT_FIELDS = [
+        'seguradora' => '(SELECT nome FROM seguradoras WHERE seguradoras.id = seguros.seguradora_id)',
+        'ramo'       => '(SELECT nome FROM ramos WHERE ramos.id = seguros.ramo_id)',
     ];
 
     protected $model;
@@ -47,7 +54,15 @@ class SeguroRepository implements SeguroRepositoryInterface
         $sortBy = $orderBy['sort_by'] ?? 'created_at';
         $sortOrder = strtolower($orderBy['sort_order'] ?? 'desc') === 'asc' ? 'asc' : 'desc';
 
-        if (in_array($sortBy, self::ALLOWED_SORT_FIELDS, true)) {
+        if (isset(self::RELATION_SORT_FIELDS[$sortBy])) {
+            $query->orderByRaw(self::RELATION_SORT_FIELDS[$sortBy] . ' ' . $sortOrder);
+        } elseif ($sortBy === 'status') {
+            $hoje = date('Y-m-d');
+            $query->orderByRaw(
+                'CASE WHEN fim_vigencia < ? THEN 0 WHEN inicio_vigencia > ? THEN 1 ELSE 2 END ' . $sortOrder,
+                [$hoje, $hoje]
+            );
+        } elseif (in_array($sortBy, self::ALLOWED_SORT_FIELDS, true)) {
             $query->orderBy($sortBy, $sortOrder);
         }
 

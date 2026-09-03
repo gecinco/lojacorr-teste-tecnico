@@ -22,7 +22,7 @@ class ListSeguroRequest extends FormRequest
             'fim_vigencia_ate' => 'nullable|date|date_format:Y-m-d',
             'seguradora_id' => 'nullable|exists:seguradoras,id',
             'ramo_id' => 'nullable|exists:ramos,id',
-            'sort_by' => 'nullable|string|in:id,documento_segurado,nome_segurado,valor_total,inicio_vigencia,fim_vigencia,created_at',
+            'sort_by' => 'nullable|string|in:id,documento_segurado,nome_segurado,valor_total,quantidade_parcelas,valor_parcela,inicio_vigencia,fim_vigencia,created_at,seguradora,ramo,status',
             'sort_order' => 'nullable|string|in:asc,desc',
             'per_page' => 'nullable|integer|in:10,25,50',
             'page' => 'nullable|integer|min:1',
