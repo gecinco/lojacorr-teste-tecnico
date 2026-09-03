@@ -29,7 +29,6 @@ class SeguroRepository implements SeguroRepositoryInterface
         'inicio_vigencia', 'fim_vigencia', 'created_at',
     ];
 
-    // Colunas exibidas que pertencem a tabelas relacionadas; ordenação via subquery escalar.
     private const RELATION_SORT_FIELDS = [
         'seguradora' => '(SELECT nome FROM seguradoras WHERE seguradoras.id = seguros.seguradora_id)',
         'ramo'       => '(SELECT nome FROM ramos WHERE ramos.id = seguros.ramo_id)',

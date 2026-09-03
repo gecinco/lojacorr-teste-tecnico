@@ -47,8 +47,8 @@ export function useSeguroForm() {
   const loading = ref(false)
 
   const tipoDocumento = computed(() => {
-    const doc = form.documento_segurado.replace(/\D/g, '')
-    return doc.length <= 11 ? 'cpf' : 'cnpj'
+    const doc = form.documento_segurado.replace(/[\s./-]/g, '').toUpperCase()
+    return /^\d{1,11}$/.test(doc) ? 'cpf' : 'cnpj'
   })
 
   const documentoMasked = computed({

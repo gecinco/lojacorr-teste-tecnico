@@ -10,8 +10,6 @@ class DocumentoValido implements Rule
 
     public function passes($attribute, $value)
     {
-        // CPF: somente dígitos. CNPJ: aceita o formato alfanumérico da Receita (2026),
-        // letras apenas na base de 12 caracteres - os 2 dígitos verificadores seguem numéricos.
         $documento = preg_replace('/[\s.\-\/]/', '', $value);
 
         if (preg_match('/^\d{11}$/', $documento)) {
@@ -70,11 +68,7 @@ class DocumentoValido implements Rule
         return true;
     }
 
-    /**
-     * Dígito verificador de CNPJ (pesos 2 a 9, direita para a esquerda).
-     * No formato alfanumérico, o valor do caractere é o próprio dígito ou
-     * o código ASCII do caractere menos 48 (mesma tabela da Receita).
-     */
+    /** DV do CNPJ (pesos 2 a 9); no formato alfanumérico o valor do caractere é ASCII - 48. */
     private function calculaDigitoCnpj($base)
     {
         $soma = 0;

@@ -43,12 +43,10 @@ export const validateCpf = (cpf: string): ValidationResult => {
   return { valid: true, message: '' }
 }
 
-// Valor do caractere para o CNPJ alfanumérico: dígito ou código ASCII - 48 (tabela da Receita).
 const valorCaractereCnpj = (caractere: string): number =>
   /[0-9]/.test(caractere) ? parseInt(caractere, 10) : caractere.toUpperCase().charCodeAt(0) - 48
 
 export const validateCnpj = (cnpj: string): ValidationResult => {
-  // Formato alfanumérico da Receita (2026): base de 12 caracteres alfanuméricos + 2 DVs numéricos.
   const cnpjLimpo = cnpj.replace(/[\s./-]/g, '').toUpperCase()
 
   if (cnpjLimpo.length !== 14) {

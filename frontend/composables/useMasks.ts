@@ -17,7 +17,6 @@ export const maskCnpj = (value: string): string => {
     .replace(/(\d{4})(\d{1,2})$/, '$1-$2')
 }
 
-// CNPJ alfanumérico: a máscara mantém a mesma forma, preservando letras na base.
 export const maskCnpjAlfanumerico = (value: string): string => {
   const limpo = value.toUpperCase().replace(/[^0-9A-Z]/g, '').slice(0, 14)
   return limpo
